@@ -20,5 +20,6 @@ from Ipc import views as ipc
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('ipc-guardar', ipc.add, name='ipc-guardar'),
-    path('ipc-listado',ipc.listado, name='ipc-listado')
+    path('ipc-listado',ipc.listado, name='ipc-listado'),
+    path('ipc-panel',ipc.ipc_panel, name='ipc-panel'),
 ]

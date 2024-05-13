@@ -69,3 +69,18 @@ def listado(request):
     context = {'ipc':ipc}
 
     return render(request,'ipc/listado.html',context)
+
+
+def ipc_panel(request):
+    interanual = Ipc.objects.filter(año='2').values('mes_anterior', 'mes')
+    
+    intermensual = Ipc.objects.filter(año='2').values('mes_año_anterior', 'mes')
+
+    if request.method == "POST":
+        pass
+
+    context = {
+        'interanual': interanual,
+        'intermensual': intermensual
+    }
+    return render(request,'ipc/panel.html', context)
