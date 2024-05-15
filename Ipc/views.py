@@ -5,7 +5,9 @@ from Ipc.models import Ipc
 from TipoValor.models import TipoValor
 from IpcTipoDivision.models import TipoDivision
 from IpcDivision.models import IpcDivision
+from sectorPrivado.models import *
 from django.contrib import messages
+from observatorio_formosa.utils import *
 # Create your views here.
 def add(request):
 
@@ -72,15 +74,25 @@ def listado(request):
 
 
 def ipc_panel(request):
+    meses = Mes.objects.all()
+    años = Año.objects.all()
     interanual = Ipc.objects.filter(año='2').values('mes_anterior', 'mes')
-    
     intermensual = Ipc.objects.filter(año='2').values('mes_año_anterior', 'mes')
 
-    if request.method == "POST":
-        pass
+    
 
     context = {
+        'meses':meses,
+        'años':años,
         'interanual': interanual,
         'intermensual': intermensual
+        
     }
+
+    if request.method == "POST":
+        interanual_filtro = Ipc.objects.filter(año=request.POST['año']).values('mes_anterior', 'mes')
+        intermensual_filtro = Ipc.objects.filter(año=request.POST['año']).values('mes_año_anterior', 'mes')
+        context.update({'interanual_filtro': interanual_filtro},
+                       {'intermensual_filtro': intermensual_filtro})
+
     return render(request,'ipc/panel.html', context)

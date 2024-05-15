@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'IpcTipoDivision',
     'Año',
     'Mes',
-    'TipoValor'
+    'TipoValor',
+    'sectorPrivado'
 ]
 
 MIDDLEWARE = [
