@@ -1,0 +1,91 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block head_content %}
+
+    <title>Panel de consultas</title>
+{% endblock head_content %}
+
+{% block container %}
+<div class="col-sm-12 col-xl-10" style="margin-top:3em;">
+    <div class="bg-light rounded h-100 p-4">
+        <h6 class="mb-0">Consulta personalizada</h6>
+        <br>
+        <div id="div-select">
+            <form method= "POST" action=" {% url 'panel' %}">
+              {% csrf_token %}
+              
+              <select name="tabla1">
+                <option selected>Seleccionar tablas</option>
+                
+              
+                  <option value="Remuneracion - IPC">IPC - Remuneracion - sector privado</option>
+                  <option value="AsalariadosRegistrados">IPC - Asalariados - sector privado</option>
+               
+               
+              </select>
+              
+              <select name="valor">
+                <option selected>Seleccionar valor</option>
+                
+                <option value="intermensual">Intermensual</option>
+                <option value="interanual">Interanual</option>
+                
+                
+               
+              </select>
+              <select name="año">
+                <option selected>Seleccionar año</option>
+                {% for año in años  %}
+                  <option value="{{año.id}}">{{año.año}}</option>
+                {% endfor %}
+               
+              </select>
+              
+              <button type="submit" class="btn btn-primary mt-2 ">Filtrar</button>
+            </form>
+            <div style= "width: 650px; margin: 35px auto" id="chartIpcHistorico"></div>
+        </div>
+        <div style= "width: 650px; margin: 35px auto" id="chart"></div>
+       
+            
+    </div>
+</div>
+<script>
+   
+    meses = []
+
+    
+    
+ 
+    function obtenerDatosIntermensualUno(){
+      
+      intermensual = []
+      {% for data in intermensual_uno  %}
+        {% if data.mes_anterior %}
+            intermensual.push({{data.mes_anterior}}) 
+        
+        {% endif %}    
+        {% for mes in meses  %}
+                {
+                  {% if data.mes == mes.id %}
+                    {
+                      meses.push('{{mes.mes}}')
+                    }  
+                
+                  {% endif %}
+
+                }
+     
+         {% endfor %}
+
+      {% endfor %}
+      
+      return intermensual
+    }
+
+    console.log(obtenerDatosIntermensualUno())
+    
+</script>
+
+{% endblock container %}

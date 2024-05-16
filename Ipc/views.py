@@ -92,7 +92,9 @@ def ipc_panel(request):
     if request.method == "POST":
         interanual_filtro = Ipc.objects.filter(año=request.POST['año']).values('mes_anterior', 'mes')
         intermensual_filtro = Ipc.objects.filter(año=request.POST['año']).values('mes_año_anterior', 'mes')
-        context.update({'interanual_filtro': interanual_filtro},
-                       {'intermensual_filtro': intermensual_filtro})
+        context.update({
+            'interanual_filtro': interanual_filtro,
+            'intermensual_filtro': intermensual_filtro
+        })
 
     return render(request,'ipc/panel.html', context)

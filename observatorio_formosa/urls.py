@@ -16,9 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from Ipc import views as ipc
+from observatorio_formosa import utils
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('panel',utils.panel, name='panel'),
     path('ipc-guardar', ipc.add, name='ipc-guardar'),
     path('ipc-listado',ipc.listado, name='ipc-listado'),
     path('ipc-panel',ipc.ipc_panel, name='ipc-panel'),

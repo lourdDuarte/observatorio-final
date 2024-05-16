@@ -14,9 +14,9 @@
           <div class="bg-light text-center rounded p-4">
               <div class="d-flex align-items-center justify-content-between mb-6">
                   <h6 class="mb-0">IPC - variables interanual / intermensual (actualizados)</h6>
-                  <a href="">Show All</a>
+                 
               </div>
-              <div style= "width: 650px; margin: 35px auto" id="chart"></div>
+              <div style= "width: 650px; margin: 35px auto" id="chartIpc"></div>
           </div>
       </div>
      
@@ -38,7 +38,7 @@
       </select>
       <button type="submit" class="btn btn-primary ms-2">Filtrar</button>
     </form>
-    <div style= "width: 650px; margin: 35px auto" id="chartFiltro"></div>
+    <div style= "width: 650px; margin: 35px auto" id="chartIpcHistorico"></div>
   </div>
 </div> 
 <style>
@@ -152,7 +152,6 @@
       return intermensual
     }
 
-
-   
+  ipc()
 </script>
 {% endblock container %}
