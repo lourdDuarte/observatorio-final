@@ -2,10 +2,7 @@ from django.shortcuts import render, redirect
 from Año.models import Año
 from Ipc.models import Ipc
 from sectorPrivado.models import *
-
-def consulta_personalizada_valores(modelo,valor,mes,año):
-    data = modelo.objects.filter(año = año).values(valor,mes)
-    return data 
+from django.db.models import F
 
 def consulta_personalizada_tabla(modelo):
     data = modelo.objects.all()
@@ -19,20 +16,17 @@ def panel(request):
         'años':años,
         'meses': meses
     }
-
     if request.method == 'POST':
         if request.POST['valor'] == 'intermensual':
             if request.POST['tabla1'] == 'Remuneracion - IPC':
-                intermensual_uno = consulta_personalizada_valores(Ipc,'mes_anterior','mes', request.POST['año'])
-                lista_modelo_uno= consulta_personalizada_tabla(Ipc)
-                intermensual_dos = consulta_personalizada_valores(Remuneracion,'var_intermensual','mes', request.POST['año'])
-                lista_modelo_dos= consulta_personalizada_tabla(Remuneracion)
+                intermensual_uno = Ipc.objects.filter(año = request.POST['año']).annotate(intermensual=F('mes_anterior')).values('mes', 'intermensual')
+                intermensual_dos = Remuneracion.objects.filter(año = request.POST['año']).annotate(intermensual=F('var_intermensual')).values('mes', 'intermensual')
+                
                 context.update ({
                     'intermensual_uno':intermensual_uno,
                     'intermensual_dos':intermensual_dos,
-                    'lista_uno': lista_modelo_uno,
-                    'lista_dos': lista_modelo_dos
 
+                    
                 })
         
 

@@ -57,15 +57,15 @@
 
     
     
- 
+    
     function obtenerDatosIntermensualUno(){
       
       intermensual = []
       {% for data in intermensual_uno  %}
-        {% if data.mes_anterior %}
-            intermensual.push({{data.mes_anterior}}) 
         
-        {% endif %}    
+            intermensual.push({{data.intermensual}}) 
+        
+          
         {% for mes in meses  %}
                 {
                   {% if data.mes == mes.id %}
@@ -84,7 +84,22 @@
       return intermensual
     }
 
-    console.log(obtenerDatosIntermensualUno())
+    function obtenerDatosIntermensualDos(){
+      
+      intermensual = []
+      {% for data in intermensual_dos  %}
+        
+            intermensual.push({{data.intermensual}}) 
+        
+          
+        
+
+      {% endfor %}
+      
+      return intermensual
+    }
+
+    panel()
     
 </script>
 
