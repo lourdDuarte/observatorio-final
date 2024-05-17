@@ -3,11 +3,11 @@ from Año.models import Año
 from Ipc.models import Ipc
 from sectorPrivado.models import *
 from django.db.models import F
-
-def consulta_personalizada_tabla(modelo):
-    data = modelo.objects.all()
-    return data 
-
+import datetime
+def obtener_año_select(id):
+    data = Año.objects.filter(id=id).values('año')
+    
+    return data
 
 def panel(request):
     años = Año.objects.all()

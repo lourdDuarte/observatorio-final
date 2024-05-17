@@ -13,7 +13,7 @@
       <div class="col-sm-12 col-xl-15">
           <div class="bg-light text-center rounded p-4">
               <div class="d-flex align-items-center justify-content-between mb-6">
-                  <h6 class="mb-0">IPC - variables interanual / intermensual (actualizados)</h6>
+                  <h6 class="mb-0">Índice de Precios al Consumidor - variables interanual / intermensual (2024)</h6>
                  
               </div>
               <div style= "width: 650px; margin: 35px auto" id="chartIpc"></div>
@@ -24,21 +24,33 @@
   
 </div>
 <div id="div-filter">
-  <h6 class="mb-0">Comparativa</h6>
+  <h5 class="mb-0">Comparativa Índice de Precios al Consumidor (IPC)</h5>
+
   <div id="div-select">
     <form method= "POST" action=" {% url 'ipc-panel' %}">
       {% csrf_token %}
       
-      <select name="año">
+      <select name="año" id="año">
         <option selected>Seleccionar año</option>
         {% for año in años  %}
           <option value="{{año.id}}">{{año.año}}</option>
         {% endfor %}
        
       </select>
-      <button type="submit" class="btn btn-primary ms-2">Filtrar</button>
+      <div style= "width: 650px; margin: 35px auto" id="chartIpcHistorico"></div>
+      <select name="tabla" id="tabla" >
+        <option selected>Tablas disponibles</option>
+       
+          <option value="Remuneracion">Remuneracion - sector privado</option>
+          <option value="Asalariados">Asalariados registrados - sector privado</option>
+       
+       
+      </select>
+      <button type="submit" id="btn" style=" margin-top: 1em;" class="btn btn-primary ms-2">Filtrar</button>
+      
+      <div style= "width: 650px; margin: 35px auto; " id="chartTabla"></div>
     </form>
-    <div style= "width: 650px; margin: 35px auto" id="chartIpcHistorico"></div>
+    
   </div>
 </div> 
 <style>
@@ -55,9 +67,11 @@
 </style>
 
 <script>
-   
+  
+
     meses = []
     meses_filtro = []
+    meses_tabla = []
     function obtenerDatosInteranualActual(){
       interanual_actual = []
         
@@ -151,7 +165,53 @@
       
       return intermensual
     }
+    function obtenerDatosInteranualTabla(){
+      interanual = []
+        
+          {% for data in interanual_tabla %}
+              {
+                interanual.push({{data.interanual}}) 
+              }
 
+              {% for mes in meses  %}
+                {
+                  {% if data.mes == mes.id %}
+                    {
+                      meses_tabla.push('{{mes.mes}}')
+                    }  
+                
+                  {% endif %}
+
+                }
+
+                
+                
+              {% endfor %}
+
+                
+               
+    
+          {% endfor %}
+            
+      return interanual
+    }
+
+    function obtenerDatosIntermensualTabla(){
+      
+      intermensual = []
+      {% for data in intermensual_tabla  %}
+          {
+            intermensual.push({{data.intermensual}}) 
+            
+          }
+         
+
+      {% endfor %}
+      
+      return intermensual
+    }
+
+    
   ipc()
 </script>
 {% endblock container %}
