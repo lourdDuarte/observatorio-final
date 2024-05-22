@@ -64,135 +64,57 @@
 <script>
   
 
-    
-   
-    meses_filtro = []
-    meses_tabla = []
-
     function obtenerDatosActual(){
       let interanual_actual = [];
       let intermensual_actual = [];
       let meses_actual = []
-    // Obtener datos interanuales
-    {% for data in interanual %}
-        interanual_actual.push({{ data.mes_anterior }});
-        {% for mes in meses  %}
-          {
-            {% if data.mes == mes.id %}
-              {
-                meses_actual.push('{{mes.mes}}')
-              }  
-                
-            {% endif %}
+      // Obtener datos
+      {% for data in ipc_actual %}
+          interanual_actual.push({{ data.mes_anterior }});
+          intermensual_actual.push({{ data.mes_año_anterior}});
+          meses_actual.push('{{data.mes}}')
+  
+      {% endfor %}
 
-          }
-
-                
-                
-        {% endfor %}
-    {% endfor %}
-
-    // Obtener datos intermensuales
-    {% for data in intermensual %}
-        intermensual_actual.push({{ data.mes_año_anterior }});
-        
-    {% endfor %}
-
-    return [interanual_actual, intermensual_actual, meses_actual];
-    }
- 
+      return [interanual_actual, intermensual_actual, meses_actual];
+      }
+  
    
 
-    function obtenerDatosInteranualFiltro(){
-      interanual = []
+    function obtenerDatosFiltro(){
+      let interanual_filtro = []
+      let intermensual_filtro = []
+      let meses_filtro = []
         
-          {% for data in interanual_filtro  %}
-              {
-                interanual.push({{data.mes_anterior}}) 
-              }
+          {% for data in ipc_filtro  %}
+              
+                interanual_filtro.push({{data.mes_anterior}}) 
+                intermensual_filtro.push({{ data.mes_año_anterior}});
+                meses_filtro.push('{{data.mes}}')
 
-              {% for mes in meses  %}
-                {
-                  {% if data.mes == mes.id %}
-                    {
-                      meses_filtro.push('{{mes.mes}}')
-                    }  
-                
-                  {% endif %}
-
-                }
-
-                
-                
-              {% endfor %}
-
-                
-               
-    
           {% endfor %}
             
-      return interanual
+      return [interanual_filtro, intermensual_filtro, meses_filtro];
     }
 
-    function obtenerDatosIntermensualFiltro(){
-      
-      intermensual = []
-      {% for data in intermensual_filtro  %}
-          {
-            intermensual.push({{data.mes_año_anterior}}) 
-            console.log({{data.mes_año_anterior}})
-          }
-         
-
-      {% endfor %}
-      
-      return intermensual
-    }
-
-    function obtenerDatosInteranualTabla(){
-      interanual = []
-        
-          {% for data in interanual_tabla %}
-              {
-                interanual.push({{data.interanual}}) 
-              }
-
-              {% for mes in meses  %}
-                {
-                  {% if data.mes == mes.id %}
-                    {
-                      meses_tabla.push('{{mes.mes}}')
-                    }  
-                
-                  {% endif %}
-
-                }
-
-                
-                
-              {% endfor %}
-
-                
-               
+   
     
+
+    function obtenerDatosTabla(){
+      
+      let interanual_tabla = []
+      let intermensual_tabla = []
+      let meses_tabla = []
+        
+          {% for data in ipc_filtro  %}
+              
+                interanual_filtro.push({{data.mes_anterior}}) 
+                intermensual_filtro.push({{ data.mes_año_anterior}});
+                meses_filtro.push('{{data.mes}}')
+
           {% endfor %}
             
-      return interanual
-    }
-
-    function obtenerDatosIntermensualTabla(){
-      
-      intermensual = []
-      {% for data in intermensual_tabla  %}
-          {
-            intermensual.push({{data.intermensual}}) 
-            
-          }
-         
-
-      {% endfor %}
-      
-      return intermensual
+      return [interanual_filtro, intermensual_filtro, meses_filtro];
     }
 
     

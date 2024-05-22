@@ -106,28 +106,22 @@ def ipc_divisiones(request):
 def ipc_panel(request):
     meses = Mes.objects.all()
     años = Año.objects.all()
-    interanual = Ipc.objects.filter(año='6').values('mes_anterior', 'mes')
-    intermensual = Ipc.objects.filter(año='6').values('mes_año_anterior', 'mes')
-    interanual_div = IpcDivision.objects.filter(año='6').values('valor_interanual', 'mes')
-    mensual_div = IpcDivision.objects.filter(año='6').values('valor_mensual', 'mes')
+    ipc_actual = Ipc.objects.filter(año='6').all()
     
     context = {
-        'meses': meses,
         'años': años,
-        'interanual': interanual,
-        'intermensual': intermensual,
-      
+        'ipc_actual': ipc_actual,
 
     }
 
     if request.method == "POST":
         año = request.POST.get('año')
         if año and año.isdigit():
-            interanual_filtro = Ipc.objects.filter(año=año).values('mes_anterior', 'mes')
-            intermensual_filtro = Ipc.objects.filter(año=año).values('mes_año_anterior', 'mes')
+            ipc_filtro = Ipc.objects.filter(año=año).all()
+            
             context.update({
-                'interanual_filtro': interanual_filtro,
-                'intermensual_filtro': intermensual_filtro,
+                'ipc_filtro': ipc_filtro,
+                
             })
 
             tabla = request.POST.get('tabla')
