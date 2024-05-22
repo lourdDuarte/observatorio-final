@@ -127,18 +127,18 @@ def ipc_panel(request):
             tabla = request.POST.get('tabla')
             if tabla:
                 if tabla == "Remuneracion":
-                    intermensual_tabla = Remuneracion.objects.filter(año=año).annotate(intermensual=F('var_intermensual')).values('mes', 'intermensual')
-                    interanual_tabla = Remuneracion.objects.filter(año=año).annotate(interanual=F('var_interanual')).values('mes', 'interanual')
-                elif tabla == "Asalariados":
-                    intermensual_tabla = AsalariadosRegistrados.objects.filter(año=año).annotate(intermensual=F('var_intermensual')).values('mes', 'intermensual')
-                    interanual_tabla = AsalariadosRegistrados.objects.filter(año=año).annotate(interanual=F('var_interanual')).values('mes', 'interanual')
-                else:
-                    intermensual_tabla, interanual_tabla = None, None
+                    data_tabla = Remuneracion.objects.filter(año=año).annotate(intermensual=F('var_intermensual'),interanual=F('var_interanual')).all()
 
-                if intermensual_tabla and interanual_tabla:
+                elif tabla == "Asalariados":
+                    data_tabla= AsalariadosRegistrados.objects.filter(año=año).annotate(intermensual=F('var_intermensual'),interanual=F('var_interanual')).all()
+
+                else:
+                    data_tabla = None
+
+                if data_tabla:
                     context.update({
-                        'intermensual_tabla': intermensual_tabla,
-                        'interanual_tabla': interanual_tabla,
+                        'ipc_tabla': data_tabla,
+                        
                     })
         else:
             context['error'] = "Debe elegir siempre un año para realizar una comparativa (las tablas son opcionales)"

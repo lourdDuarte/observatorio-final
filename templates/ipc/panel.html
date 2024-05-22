@@ -8,47 +8,52 @@
 {% endblock head_content %}
 
 {% block container %}
-<div class="container ">
 
-</div>
-
+<div class="container"></div>
           
   
 
 <div class="div-filter">
   <div>
-    <h6 class="mb-0">Índice de Precios al Consumidor - variables interanual / intermensual (2024)</h6>
+    <h5 class="mb-0">Índice de Precios al Consumidor - variables interanual / intermensual (2024)</h5>
                  
-    <div style= "width: 650px; margin: 35px auto" id="chartIpc"></div>
+    <div style= "width: 850px; margin: 35px auto" id="chartIpc"></div>
   </div>
+  <button onclick="esconderDiv()"  style=" margin-bottom: 1em;" class="btn btn-primary ms-2" >Ver solo ipc</button>
   <h5 class="mb-0">Comparativa Índice de Precios al Consumidor (IPC)</h5>
   {{error}}
-  <div id="div-select">
-    <form method= "POST" action=" {% url 'ipc-panel' %}">
-      {% csrf_token %}
       
-      <select name="año" id="año">
-        <option selected>Seleccionar año</option>
-        {% for año in años  %}
-          <option value="{{año.id}}">{{año.año}}</option>
-        {% endfor %}
+      <form method= "POST" action=" {% url 'ipc-panel' %}">
+        {% csrf_token %}
+        
+        <select name="año" id="año">
+          <option selected>Seleccionar año</option>
+          {% for año in años  %}
+            <option value="{{año.id}}">{{año.año}}</option>
+          {% endfor %}
+         
+        </select>
+        <select name="tabla" id="tabla" >
+          <option selected>Tablas disponibles</option>
+         
+            <option value="Remuneracion">Remuneracion - sector privado</option>
+            <option value="Asalariados">Asalariados registrados - sector privado</option>
+         
+         
+        </select>
+        <button type="submit" id="btn" style=" margin-top: 0em;" class="btn btn-primary ms-2">Filtrar</button> 
        
-      </select>
+        
+          <div style= "width: 850px; margin: 35px auto; " id="chartIpcHistorico"></div>
+          
+          <div style= "width: 850px; margin: 35px auto; display = block;" id="chartTabla"></div>
+        
+        
+      </form>
       
-      <div style= "width: 650px; margin: 35px auto" id="chartIpcHistorico"></div>
-      <select name="tabla" id="tabla" >
-        <option selected>Tablas disponibles</option>
-       
-          <option value="Remuneracion">Remuneracion - sector privado</option>
-          <option value="Asalariados">Asalariados registrados - sector privado</option>
-       
-       
-      </select>
-      <button type="submit" id="btn" style=" margin-top: 1em;" class="btn btn-primary ms-2">Filtrar</button>
-      
-      <div style= "width: 650px; margin: 35px auto; " id="chartTabla"></div>
-    </form>
+    </div>
     
+
   </div>
   
 </div> 
@@ -106,18 +111,66 @@
       let intermensual_tabla = []
       let meses_tabla = []
         
-          {% for data in ipc_filtro  %}
+          {% for data in ipc_tabla %}
               
-                interanual_filtro.push({{data.mes_anterior}}) 
-                intermensual_filtro.push({{ data.mes_año_anterior}});
-                meses_filtro.push('{{data.mes}}')
+                interanual_tabla.push({{data.interanual}}) 
+                intermensual_tabla.push({{ data.intermensual}});
+                meses_tabla.push('{{data.mes}}')
 
           {% endfor %}
             
-      return [interanual_filtro, intermensual_filtro, meses_filtro];
+      return [interanual_tabla, intermensual_tabla, meses_tabla];
     }
 
+  function esconderDiv() {
+      var div2 = document.getElementById('chartTabla');
+      var div1 = document.getElementById('chartIpcHistorico');
+
+      if (window.getComputedStyle(div2).display === 'none') {
+          div2.style.display = 'block';
+          
+           // Restaurar el ancho original
+      } else {
+          div2.style.display = 'none';
+          
+          
+      }
+  }
     
   ipc()
 </script>
 {% endblock container %}
+
+{% comment %} <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esconder Div</title>
+    <style>
+        #div2 {
+            display: block; /* Asegúrate de que el div sea visible al inicio */
+        }
+    </style>
+</head>
+<body>
+    <div id="div1">
+        Este es el primer div.
+    </div>
+    <div id="div2">
+        Este es el segundo div que se puede esconder.
+    </div>
+    <button onclick="esconderDiv()">Esconder Div</button>
+
+    <script>
+        function esconderDiv() {
+            var div2 = document.getElementById('div2');
+            if (div2.style.display === 'none') {
+                div2.style.display = 'block';
+            } else {
+                div2.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html> {% endcomment %}
