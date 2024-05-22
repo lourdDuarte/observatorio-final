@@ -1,6 +1,8 @@
 function draw_line_chart(interanual,intermensual,mes, id)
-{
 
+{
+  console.log(interanual)
+  console.log(intermensual)
   var options = {
     series: [
     {

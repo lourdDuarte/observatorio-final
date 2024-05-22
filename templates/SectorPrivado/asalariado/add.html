@@ -1,0 +1,109 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block head_content %}
+
+    <title>Sector privado asalariados - guardar</title>
+{% endblock head_content %}
+
+{% block container %}
+<div class="col-sm-12 col-xl-10" style="margin-top:3em;">
+    <div class="bg-light rounded h-100 p-4">
+        <form role="form" method="POST" enctype="multipart/form-data" url='#'>
+            {% csrf_token %}
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li
+                        {% if message.tags %} 
+                            class="{{ message.tags }}"
+                        {% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+            <h6 class="mb-4">Sector privado asalariados - Datos</h6>
+            <div class="form-floating mb-3">
+                <select class="form-select" id="floatingSelect"
+                    aria-label="Floating label select example" name="año">
+                    <option selected>Año</option>
+                    {% for año in años  %}
+                    <option value={{año.id}}>{{año.año}}</option>
+                    {% endfor %}
+                    
+                </select>
+                <label for="floatingSelect">Works with selects</label>
+            </div>
+            <div class="form-floating mb-3">
+                <select class="form-select" id="floatingSelect"
+                    aria-label="Floating label select example" name="mes">
+                    <option selected>Mes</option>
+                    {% for mes in meses  %}
+                    <option value='{{mes.id}}'>{{mes.mes}}</option>
+                    {% endfor %}
+                </select>
+                <label for="floatingSelect">Works with selects</label>
+            </div>
+            <div class="form-floating mb-3">
+                <select class="form-select" id="floatingSelect"
+                    aria-label="Floating label select example" name="tipo_valor">
+                    <option selected>Tipo de valor</option>
+                    {% for valor in valores  %}
+                    <option value='{{valor.id}}'>{{valor.valor}}</option>
+                    {% endfor %}
+                </select>
+                <label for="floatingSelect">Works with selects</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingInput"
+                    placeholder="Mes anterior" name="cantidad_sin_estacionalidad">
+                <label for="floatingInput">Cantidad sin estacionalidad</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingPassword"
+                    placeholder="Diciembre del mes anterior" name="dif_intermensual">
+                <label for="floatingPassword">Diferencia intermensual</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingPassword"
+                    placeholder="Mismo mes año anterior" name="dif_interanual">
+                <label for="floatingPassword">Diferencia interanual</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingPassword"
+                    placeholder="Variable mensual" name="var_intermensual">
+                <label for="floatingPassword">Variable Intermensual</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingPassword"
+                    placeholder="Variable mensual" name="var_interanual">
+                <label for="floatingPassword">Variable Interanual</label>
+            </div>
+            <h6 class="mb-4" style="margin-top:1em;">Asalariados por rama </h6>
+            <div class="form-floating mb-3">
+                <select class="form-select" id="floatingSelect"
+                    aria-label="Floating label select example" name="tipo_division">
+                    <option selected>Tipo de division</option>
+                    {% for division in tipo_division  %}
+                    <option value='{{division.id}}'>{{division.tipo_division}}</option>
+                    {% endfor %}
+                </select>
+                <label for="floatingSelect">Works with selects</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" name="valor_mensual" id="floatingPassword"
+                    placeholder="Valor mensual">
+                <label for="floatingPassword">Valor mensual</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" name="valor_interanual" id="floatingPassword"
+                    placeholder="Valor interanual">
+                <label for="floatingPassword">Valor interanual</label>
+            </div> {% endcomment %}
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </form>
+        
+    </div>
+</div>
+
+{% endblock container %}
+

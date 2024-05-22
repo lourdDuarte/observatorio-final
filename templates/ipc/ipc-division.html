@@ -1,0 +1,108 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block head_content %}
+
+    <title>IPC - listado de datos</title>
+{% endblock head_content %}
+
+{% block container %}
+<div class="container ">
+    
+  
+</div>
+
+          
+  
+
+<div class="div-table">
+    <h6 class="mb-0"  >Índice de Precios al Consumidor - Datos por Division</h6>
+     
+            
+
+            <div class="table-responsive-sm" style="margin-top:2em;">
+
+               <table id="datatablesSimple" style="margin-bottom:2em;">
+                  <thead>
+                     <tr>
+                        <th>Año</th>
+                        <th>Mes</th>
+                        <th>Tipo valor</th>
+                        <th>Divison</th>
+                        <th>Valor mensual</th>
+                        <th>Valor interanual</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     
+                     {% for data in ipcDivision %}
+                     <tr>
+                        <td>{{data.año}}</td>
+                        <td>{{data.mes}}</td>
+                        <td>{{data.tipo_valor}}</td>
+                        <td>{{data.tipo_division}}</td>
+                        <td>{{data.valor_mensual}}</td>
+                        <td>{{data.valor_interanual}}</td>
+                     </tr>
+                     {% endfor %}
+                     
+                       
+                    
+                     
+                    
+                    
+                  </tbody>
+                </table>
+                
+            </div>
+            <h6 class="mb-0" style="margin-top:2em;">Índice de Precios al Consumidor - Graficos</h6>
+            <div class="contenedor-selects">
+                <form method= "POST" action=" {% url 'ipc-division' %}">
+                    {% csrf_token %}
+                    <select class="select1" name="año">
+                        <option selected>Año</option>
+                        {% for año in años  %}
+                            <option value="{{año.id}}">{{año.año}}</option>
+                        {% endfor %}
+                    
+                    </select>
+                    <select class="select2" name="tipo_division" >
+                        <option selected>Division</option>
+                        {% for division in tipoDivison %}
+                        <option value="{{division.id}}">{{division.tipo_division}}</option>
+                        {% endfor %}
+                    
+                    
+                    </select>
+                    <button type="submit" id="btn" class="btn btn-primary ms-2">Filtrar</button>
+                    <div style= "width: 700px; margin: 35px auto; margin-left:25em; " id="chartDivision"></div>
+                </form>
+            </div>
+              
+            
+    </div>
+    
+</div>
+<script>
+
+    function obtenerDatosDivision(){
+        let interanual= [];
+        let intermensual = [];
+        let meses= []
+      // Obtener datos interanuales / mensuales
+      {% for data in division_data %}
+          interanual.push({{ data.valor_interanual }});
+          intermensual.push({{data.valor_mensual}})
+          meses.push('{{data.mes}}')
+          
+      {% endfor %}
+  
+  
+      return [interanual, intermensual, meses];
+      }
+
+      ipc_division()
+   
+</script>
+
+{% endblock container %}

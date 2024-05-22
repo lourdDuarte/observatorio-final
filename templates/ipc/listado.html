@@ -7,51 +7,55 @@
 {% endblock head_content %}
 
 {% block container %}
-<div class="col-sm-12 col-xl-10" style="margin-top:3em;">
-    <div class="bg-light rounded h-100 p-4">
+<div class="container ">
+  
+</div>
+
+          
+  
+
+<div class="div-table">
         
-        <div class="table_section padding_infor_info">
+            
+
             <div class="table-responsive-sm">
-               
+               <h6 class="mb-0">Índice de Precios al Consumidor - Datos</h6>
+
                <table id="datatablesSimple">
                   <thead>
                      <tr>
                         <th>Año</th>
                         <th>Mes</th>
-                        <th>Tipo</th>
-                        <th>Tipo de division</th>
+                        <th>Tipo valor</th>
                         <th>Mes anterior</th>
+                        <th>Mes del año anterior</th>
                         <th>Diciembre del año anterior</th>
-                        <th>Mismo mes del año anterior</th>
-                        <th>Valor mensual - division</th>
-                        <th>Valor interanual - division</th>
                      </tr>
                   </thead>
                   <tbody>
+                     
                      {% for data in ipc %}
                      <tr>
-                        <td>{{data.ipc.año}}</td>
-                        <td>{{data.ipc.mes}}</td>
-                        <td>{{data.ipc.tipo_valor}}</td>
-                        <td>{{data.tipo_division}}</td>
-                        <td>{{data.ipc.mes_anterior}}</td>
-                        <td>{{data.ipc.dic_mes_anterior}}</td>
-                        <td>{{data.ipc.mes_año_anterior}}</td>
-                        <td>{{data.valor_mensual}}</td>
-                        <td>{{data.valor_interanual}}</td>
-                        
+                        <td>{{data.año}}</td>
+                        <td>{{data.mes}}</td>
+                        <td>{{data.tipo_valor}}</td>
+                        <td>{{data.mes_anterior}}</td>
+                        <td>{{data.mes_año_anterior}}</td>
+                        <td>{{data.dic_año_anterior}}</td>
                      </tr>
-                     
                      {% endfor %}
                      
+                       
+                    
                      
-                   
+                    
                     
                   </tbody>
                 </table>
-              
             </div>
-         </div>
+
+
+          
     </div>
 </div>
 

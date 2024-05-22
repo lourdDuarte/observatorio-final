@@ -24,11 +24,21 @@
         </div>
         <div class="navbar-nav w-100">
             {% comment %} <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a> {% endcomment %}
-            <a href="{% url 'panel' %}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Panel</a>
+            {% comment %} <a href="{% url 'panel' %}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Panel</a> {% endcomment %}
+            
+            <a href=" {% url 'admin:index' %} " class="nav-item nav-link"><i class="fas fa-folder-plus"></i>Cargar datos</a>           
             <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fas fa-dollar-sign"></i> IPC</a>
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fas fa-dollar-sign"></i>IPC</a>
                 <div class="dropdown-menu bg-transparent border-0">
-                    <a href=" {% url 'ipc-guardar' %} " class="dropdown-item">Cargar datos</a>
+                    <a href="{% url 'ipc-listado' %}" class="dropdown-item">Datos</a>
+                    <a href="{% url 'ipc-panel' %}" class="dropdown-item">Panel</a>
+                    <a href="{% url 'ipc-division' %}" class="dropdown-item">IPC - Divisiones</a>
+                </div>
+            </div>
+            
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fas fa-user-lock"></i> Sector privado</a>
+                <div class="dropdown-menu bg-transparent border-0">
                     <a href="{% url 'ipc-listado' %}" class="dropdown-item">Listado</a>
                     <a href="{% url 'ipc-panel' %}" class="dropdown-item">Panel</a>
                 </div>

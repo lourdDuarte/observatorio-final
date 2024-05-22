@@ -3,8 +3,7 @@ from Año.models import Año
 from Mes.models import Mes
 from Ipc.models import Ipc
 from TipoValor.models import TipoValor
-from IpcTipoDivision.models import TipoDivision
-from IpcDivision.models import IpcDivision
+from Ipc.models import *
 from sectorPrivado.models import *
 from django.contrib import messages
 from observatorio_formosa.utils import *
@@ -68,58 +67,86 @@ def add(request):
 
 
 def listado(request):
-    ipc = IpcDivision.objects.select_related('ipc').all()
-    context = {'ipc':ipc}
+   
+    ipc = Ipc.objects.all()
+    context = {
+        'ipc':ipc,
+        
+    }
 
     return render(request,'ipc/listado.html',context)
+
+def ipc_divisiones(request):
+    años = Año.objects.all()
+    meses = Mes.objects.all()
+    IpcDivisiones = IpcDivision.objects.all()
+    tipoDivisiones = TipoDivision.objects.all()
+    context = {
+        'ipcDivision':IpcDivisiones,
+        'tipoDivison': tipoDivisiones,
+        'años':años,
+        'meses':meses,
+        
+    }
+
+    if request.method == "POST":
+        año = request.POST.get('año')
+        division = request.POST.get('tipo_division')
+        if año and año.isdigit() and division:
+            
+            data = IpcDivision.objects.filter(año = año, tipo_division = division).all()
+            context.update({
+                'division_data': data,
+                
+            })
+
+    return render(request,'ipc/ipc-division.html',context)
 
 
 def ipc_panel(request):
     meses = Mes.objects.all()
     años = Año.objects.all()
-    interanual = Ipc.objects.filter(año='2').values('mes_anterior', 'mes')
-    intermensual = Ipc.objects.filter(año='2').values('mes_año_anterior', 'mes')
-
+    interanual = Ipc.objects.filter(año='6').values('mes_anterior', 'mes')
+    intermensual = Ipc.objects.filter(año='6').values('mes_año_anterior', 'mes')
+    interanual_div = IpcDivision.objects.filter(año='6').values('valor_interanual', 'mes')
+    mensual_div = IpcDivision.objects.filter(año='6').values('valor_mensual', 'mes')
     
-
     context = {
-        'meses':meses,
-        'años':años,
+        'meses': meses,
+        'años': años,
         'interanual': interanual,
-        'intermensual': intermensual
-        
+        'intermensual': intermensual,
+      
+
     }
 
     if request.method == "POST":
-       
-        if request.POST['año']:
-            interanual_filtro = Ipc.objects.filter(año=request.POST['año']).values('mes_anterior', 'mes')
-            intermensual_filtro = Ipc.objects.filter(año=request.POST['año']).values('mes_año_anterior', 'mes')
+        año = request.POST.get('año')
+        if año and año.isdigit():
+            interanual_filtro = Ipc.objects.filter(año=año).values('mes_anterior', 'mes')
+            intermensual_filtro = Ipc.objects.filter(año=año).values('mes_año_anterior', 'mes')
             context.update({
                 'interanual_filtro': interanual_filtro,
                 'intermensual_filtro': intermensual_filtro,
-                
             })
-            
-            if request.POST['tabla']:
-                if request.POST['tabla'] == "Remuneracion":
-                
-                    intermensual_tabla = Remuneracion.objects.filter(año = request.POST['año']).annotate(intermensual=F('var_intermensual')).values('mes', 'intermensual')
-                    interanual_tabla = Remuneracion.objects.filter(año = request.POST['año']).annotate(interanual=F('var_interanual')).values('mes', 'interanual')
-                    
+
+            tabla = request.POST.get('tabla')
+            if tabla:
+                if tabla == "Remuneracion":
+                    intermensual_tabla = Remuneracion.objects.filter(año=año).annotate(intermensual=F('var_intermensual')).values('mes', 'intermensual')
+                    interanual_tabla = Remuneracion.objects.filter(año=año).annotate(interanual=F('var_interanual')).values('mes', 'interanual')
+                elif tabla == "Asalariados":
+                    intermensual_tabla = AsalariadosRegistrados.objects.filter(año=año).annotate(intermensual=F('var_intermensual')).values('mes', 'intermensual')
+                    interanual_tabla = AsalariadosRegistrados.objects.filter(año=año).annotate(interanual=F('var_interanual')).values('mes', 'interanual')
+                else:
+                    intermensual_tabla, interanual_tabla = None, None
+
+                if intermensual_tabla and interanual_tabla:
                     context.update({
-                    'intermensual_tabla': intermensual_tabla,
-                    'interanual_tabla': interanual_tabla
-                    })
-                if request.POST['tabla'] == "Asalariados":
-                
-                    intermensual_tabla = AsalariadosRegistrados.objects.filter(año = request.POST['año']).annotate(intermensual=F('var_intermensual')).values('mes', 'intermensual')
-                    interanual_tabla = AsalariadosRegistrados.objects.filter(año = request.POST['año']).annotate(interanual=F('var_interanual')).values('mes', 'interanual')
-                    
-                    context.update({
-                    'intermensual_tabla': intermensual_tabla,
-                    'interanual_tabla': interanual_tabla
+                        'intermensual_tabla': intermensual_tabla,
+                        'interanual_tabla': interanual_tabla,
                     })
         else:
-            pass
-    return render(request,'ipc/panel.html', context)
+            context['error'] = "Debe elegir siempre un año para realizar una comparativa (las tablas son opcionales)"
+
+    return render(request, 'ipc/panel.html', context)

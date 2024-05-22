@@ -8,24 +8,21 @@
 {% endblock head_content %}
 
 {% block container %}
-<div class="container-fluid pt-4 px-4" style="margin-left:-10em;">
-  <div class="row g-4">
-      <div class="col-sm-12 col-xl-15">
-          <div class="bg-light text-center rounded p-4">
-              <div class="d-flex align-items-center justify-content-between mb-6">
-                  <h6 class="mb-0">Índice de Precios al Consumidor - variables interanual / intermensual (2024)</h6>
-                 
-              </div>
-              <div style= "width: 650px; margin: 35px auto" id="chartIpc"></div>
-          </div>
-      </div>
-     
-  </div>
-  
-</div>
-<div id="div-filter">
-  <h5 class="mb-0">Comparativa Índice de Precios al Consumidor (IPC)</h5>
+<div class="container ">
 
+</div>
+
+          
+  
+
+<div class="div-filter">
+  <div>
+    <h6 class="mb-0">Índice de Precios al Consumidor - variables interanual / intermensual (2024)</h6>
+                 
+    <div style= "width: 650px; margin: 35px auto" id="chartIpc"></div>
+  </div>
+  <h5 class="mb-0">Comparativa Índice de Precios al Consumidor (IPC)</h5>
+  {{error}}
   <div id="div-select">
     <form method= "POST" action=" {% url 'ipc-panel' %}">
       {% csrf_token %}
@@ -37,6 +34,7 @@
         {% endfor %}
        
       </select>
+      
       <div style= "width: 650px; margin: 35px auto" id="chartIpcHistorico"></div>
       <select name="tabla" id="tabla" >
         <option selected>Tablas disponibles</option>
@@ -52,13 +50,10 @@
     </form>
     
   </div>
+  
 </div> 
 <style>
-  #div-filter{
-   margin-top: 5em;
-   margin-left: -9em;
   
-}
 
 #div-select{
   display: block;
@@ -69,56 +64,44 @@
 <script>
   
 
-    meses = []
+    
+   
     meses_filtro = []
     meses_tabla = []
-    function obtenerDatosInteranualActual(){
-      interanual_actual = []
-        
-          {% for data in interanual  %}
-              {
-                interanual_actual.push({{data.mes_anterior}}) 
-              }
 
-              {% for mes in meses  %}
-                {
-                  {% if data.mes == mes.id %}
-                    {
-                      meses.push('{{mes.mes}}')
-                    }  
-                
-                  {% endif %}
-
-                }
-
-                
-                
-              {% endfor %}
-
-                
-               
-    
-          {% endfor %}
-            
-      return interanual_actual
-    }
-
-    
- 
-    function obtenerDatosIntermensualActual(){
-      
-      intermensual_actual = []
-      {% for data in intermensual  %}
+    function obtenerDatosActual(){
+      let interanual_actual = [];
+      let intermensual_actual = [];
+      let meses_actual = []
+    // Obtener datos interanuales
+    {% for data in interanual %}
+        interanual_actual.push({{ data.mes_anterior }});
+        {% for mes in meses  %}
           {
-            intermensual_actual.push({{data.mes_año_anterior}}) 
-            console.log({{data.mes_año_anterior}})
-          }
-         
+            {% if data.mes == mes.id %}
+              {
+                meses_actual.push('{{mes.mes}}')
+              }  
+                
+            {% endif %}
 
-      {% endfor %}
-      
-      return intermensual_actual
+          }
+
+                
+                
+        {% endfor %}
+    {% endfor %}
+
+    // Obtener datos intermensuales
+    {% for data in intermensual %}
+        intermensual_actual.push({{ data.mes_año_anterior }});
+        
+    {% endfor %}
+
+    return [interanual_actual, intermensual_actual, meses_actual];
     }
+ 
+   
 
     function obtenerDatosInteranualFiltro(){
       interanual = []
@@ -165,6 +148,7 @@
       
       return intermensual
     }
+
     function obtenerDatosInteranualTabla(){
       interanual = []
         

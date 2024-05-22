@@ -275,3 +275,42 @@
     background: var(--dark);
     border-color: var(--primary);
 }
+
+.container {
+    display: flex;
+    width: 100%;
+    margin-left: 5em;
+    
+}
+.container div {
+    flex: 1;
+    padding: 3px;
+    margin-top: 0em;
+    
+    
+}
+
+.div-filter, .div-table{
+    margin-top: 5em;
+    margin-left: 5em;
+   
+ }
+
+ .div-table{
+    width: 80%;
+ }
+
+.contenedor-selects {
+    display: flex;
+    flex-direction: row;
+   
+    /* Ajustar otras propiedades como `justify-content` si es necesario */
+  }
+.contenedor-selects select{
+    width: 15em;
+    height: 2em;
+    margin-top: 2em;
+    
+   
+
+}

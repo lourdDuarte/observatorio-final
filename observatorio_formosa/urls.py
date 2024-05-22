@@ -21,7 +21,7 @@ from observatorio_formosa import utils
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('panel',utils.panel, name='panel'),
-    path('ipc-guardar', ipc.add, name='ipc-guardar'),
+    path('ipc-division', ipc.ipc_divisiones, name='ipc-division'),
     path('ipc-listado',ipc.listado, name='ipc-listado'),
     path('ipc-panel',ipc.ipc_panel, name='ipc-panel'),
 ]
