@@ -1,0 +1,126 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block head_content %}
+
+    <title>Asalariados sector privado</title>
+
+{% endblock head_content %}
+
+{% block container %}
+
+<div class="container"></div>
+          
+  
+
+
+<div class="container ">
+    
+  
+</div>
+
+          
+  
+
+<div class="div-table">
+    <h6 class="mb-0"  >Asalariados sector privado - Ramas de actividad</h6>
+     
+            
+
+            <div class="table-responsive-sm" style="margin-top:2em;">
+
+               <table id="datatablesSimple" style="margin-bottom:2em;">
+                  <thead>
+                     <tr>
+                        <th>Año</th>
+                        <th>Mes</th>
+                        <th>Tipo valor</th>
+                        <th>Rama</th>
+                        <th>Cantidad registrados</th>
+                        <th>Variable intertrimestral</th>
+
+                     </tr>
+                  </thead>
+                  <tbody>
+                     
+                     {% for data in listado %}
+                     <tr>
+                        <td>{{data.año}}</td>
+                        <td>{{data.mes}}</td>
+                        <td>{{data.tipo_valor}}</td>
+                        <td>{{data.tipo_rama}}</td>
+                        <td>{{data.cantidad_registrado}}</td>
+                        <td>{{data.var_intertrimestral}}</td>
+
+                     {% endfor %}
+                     
+                       
+                    
+                     
+                    
+                    
+                  </tbody>
+                </table>
+            </div>
+            <h6 class="mb-0" style="margin-top:2em;">Asalariados sector privado rama de acrividad variable intermensual / cantidad - Graficos </h6>
+            <div class="contenedor-selects">
+                <form method= "POST" action=" {% url 'asalariado-panel' %}">
+                    {% csrf_token %}
+                    <select class="select1" name="año">
+                        <option selected>Año</option>
+                        {% for año in años  %}
+                            <option value="{{año.id}}">{{año.año}}</option>
+                        {% endfor %}
+                    
+                    </select>
+                    <select class="select1" name="tipo_rama">
+                        <option selected>Rama de actividad</option>
+                        {% for rama in ramas  %}
+                            <option value="{{rama.id}}">{{rama.nombre_rama}}</option>
+                        {% endfor %}
+                    
+                    </select>
+                    <button type="submit" id="btn" class="btn btn-primary ms-2">Filtrar</button>
+                    <div class="container ">
+                        <div style= "width: 750px; margin: 35px auto; margin-left:-7em; " id="chartVariable"></div>
+                        <div style= "width: 750px; margin: 35px auto; margin-left: 2em; " id="chartDiferencia"></div>
+
+                    </div>
+                    
+                </form>
+            </div>
+</div>
+<script>
+  
+
+    function obtenerDatosFiltroAsalariado(){
+      let var_interanual_filtro = [];
+      let var_intermensual_filtro = [];
+
+      let dif_interanual_filtro = [];
+      let dif_intermensual_filtro = [];
+      let meses_filtro = []
+
+
+      // Obtener datos
+      {% for data in data_filtro %}
+          
+          var_interanual_filtro.push({{ data.var_interanual }});
+          var_intermensual_filtro.push({{ data.var_intermensual}});
+
+          dif_interanual_filtro.push({{ data.dif_interanual }});
+          dif_intermensual_filtro.push({{ data.dif_intermensual}});
+          meses_filtro.push('{{data.mes}}')
+  
+      {% endfor %}
+
+      return [dif_interanual_filtro, dif_intermensual_filtro,var_interanual_filtro, var_intermensual_filtro, meses_filtro];
+      }
+
+    
+    
+   
+    asalariados()
+</script> 
+{% endblock container %}
+
