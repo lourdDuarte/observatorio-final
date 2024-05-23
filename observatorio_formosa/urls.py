@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from Ipc import views as ipc
+from sectorPrivado import views as privado
 from observatorio_formosa import utils
 
 urlpatterns = [
@@ -24,4 +25,5 @@ urlpatterns = [
     path('ipc-division', ipc.ipc_divisiones, name='ipc-division'),
     path('ipc-listado',ipc.listado, name='ipc-listado'),
     path('ipc-panel',ipc.ipc_panel, name='ipc-panel'),
+    path('asalariado-panel',privado.privado_panel, name='asalariado-panel'),
 ]

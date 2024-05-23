@@ -1,8 +1,7 @@
-function draw_line_chart(interanual,intermensual,mes, id)
+function draw_line_chart(interanual,intermensual,mes, text, id)
 
 {
-  console.log(interanual)
-  console.log(intermensual)
+  
   var options = {
     series: [
     {
@@ -37,7 +36,7 @@ function draw_line_chart(interanual,intermensual,mes, id)
     curve: 'smooth'
   },
   title: {
-    text: 'Datos',
+    text: text,
     align: 'left'
   },
   grid: {
@@ -74,4 +73,68 @@ function draw_line_chart(interanual,intermensual,mes, id)
 
   var chart = new ApexCharts(document.querySelector("#"+id), options);
   chart.render();
+}
+
+
+function draw_basic_line_chart(data,mes, id){
+  var options = {
+    series: [{
+      name: "Desktops",
+      data: data
+  }],
+    chart: {
+    height: 350,
+    type: 'line',
+    zoom: {
+      enabled: false
+    }
+  },
+  dataLabels: {
+    enabled: false
+  },
+  stroke: {
+    curve: 'straight'
+  },
+  title: {
+    text: 'Product Trends by Month',
+    align: 'left'
+  },
+  grid: {
+    row: {
+      colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+      opacity: 0.5
+    },
+  },
+  xaxis: {
+    categories: mes,
+  }
+  };
+
+  var chart = new ApexCharts(document.querySelector("#"+id), options);
+  chart.render();
+}
+
+
+function draw_column_chart(data, mes, texto, id){
+  var options = {
+    series: [{
+    name: "sales",
+    data: data
+  }],
+    chart: {
+    type: 'bar',
+    height: 380
+  },
+  xaxis: {
+    type: 'category',
+    labels: mes,
+  },
+  title: {
+      text: text,
+  },
+  };
+
+  var chart = new ApexCharts(document.querySelector("#" + id), options);
+  chart.render();
+
 }
