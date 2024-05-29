@@ -77,10 +77,11 @@ function draw_line_chart(interanual,intermensual,mes, text, id)
 
 
 function draw_basic_line_chart(data,mes, id){
+  
   var options = {
     series: [{
       name: "Desktops",
-      data: data
+      data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
   }],
     chart: {
     height: 350,
@@ -106,7 +107,7 @@ function draw_basic_line_chart(data,mes, id){
     },
   },
   xaxis: {
-    categories: mes,
+    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
   }
   };
 
@@ -115,26 +116,38 @@ function draw_basic_line_chart(data,mes, id){
 }
 
 
-function draw_column_chart(data, mes, texto, id){
+function draw_column_chart(data, meses, id){
+ 
   var options = {
     series: [{
-    name: "sales",
-    data: data
+    
+    data: [23, 31, 40, 101, 40, 36, 32, 23, 14, 48, 45, 42]
   }],
     chart: {
+    height: 350,
     type: 'bar',
-    height: 380
   },
+ 
+  
+  
   xaxis: {
-    type: 'category',
-    labels: mes,
+    categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    position: 'bottom',
+   
+    
+   
   },
+ 
   title: {
-      text: text,
-  },
+    text: 'Monthly Inflation in Argentina, 2002',
+   
+    offsetY: 5,
+    align: 'center',
+    
+   
+  }
   };
 
-  var chart = new ApexCharts(document.querySelector("#" + id), options);
+  var chart = new ApexCharts(document.querySelector("#"+id), options);
   chart.render();
-
 }

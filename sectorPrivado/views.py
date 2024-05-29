@@ -45,8 +45,8 @@ def rama_panel(request):
 
     if request.method == "POST":
         año = request.POST.get('año')
-        rama = request.POST.get('año')
-        if año and año.isdigit():
+        rama = request.POST.get('tipo_rama')
+        if año and año.isdigit() and rama:
             data_filtro = AsalariadosRama.objects.filter(año=año, tipo_rama=rama).all()
             
             context.update({
@@ -55,6 +55,6 @@ def rama_panel(request):
             })
 
         else:
-            context['error'] = "Debe elegir siempre un año para realizar una comparativa (las tablas son opcionales)"
+            context['error'] = "Debe elegir siempre un año y tipo de rama para obtener datos"
 
     return render(request, 'SectorPrivado/asalariado/panel-rama.html', context)

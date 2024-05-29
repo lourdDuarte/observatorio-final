@@ -64,7 +64,7 @@
             </div>
             <h6 class="mb-0" style="margin-top:2em;">Asalariados sector privado rama de acrividad variable intermensual / cantidad - Graficos </h6>
             <div class="contenedor-selects">
-                <form method= "POST" action=" {% url 'asalariado-panel' %}">
+                <form method= "POST" action=" {% url 'rama-panel' %}">
                     {% csrf_token %}
                     <select class="select1" name="año">
                         <option selected>Año</option>
@@ -82,8 +82,8 @@
                     </select>
                     <button type="submit" id="btn" class="btn btn-primary ms-2">Filtrar</button>
                     <div class="container ">
-                        <div style= "width: 750px; margin: 35px auto; margin-left:-7em; " id="chartVariable"></div>
-                        <div style= "width: 750px; margin: 35px auto; margin-left: 2em; " id="chartDiferencia"></div>
+                        <div style= "width: 750px; margin-left:-7em; " id="chartCantidad"></div>
+                        <div style= "width: 750px; margin-left: 2em; " id="chartIntertrimestral"></div>
 
                     </div>
                     
@@ -93,34 +93,28 @@
 <script>
   
 
-    function obtenerDatosFiltroAsalariado(){
-      let var_interanual_filtro = [];
-      let var_intermensual_filtro = [];
-
-      let dif_interanual_filtro = [];
-      let dif_intermensual_filtro = [];
-      let meses_filtro = []
+    function obtenerDatosFiltroAsalariadoRama(){
+      let var_intertrimestral_filtro = [];
+      let var_cantidad_filtro = [];
+      let meses_rama_filtro = []
 
 
       // Obtener datos
       {% for data in data_filtro %}
           
-          var_interanual_filtro.push({{ data.var_interanual }});
-          var_intermensual_filtro.push({{ data.var_intermensual}});
-
-          dif_interanual_filtro.push({{ data.dif_interanual }});
-          dif_intermensual_filtro.push({{ data.dif_intermensual}});
-          meses_filtro.push('{{data.mes}}')
+          var_intertrimestral_filtro.push({{ data.var_intertrimestral }});
+          var_cantidad_filtro.push({{ data.cantidad_registrado}})
+          meses_rama_filtro.push('{{data.mes}}')
   
       {% endfor %}
 
-      return [dif_interanual_filtro, dif_intermensual_filtro,var_interanual_filtro, var_intermensual_filtro, meses_filtro];
+      return [var_intertrimestral_filtro, var_cantidad_filtro,meses_rama_filtro];
       }
 
     
     
    
-    asalariados()
+    asalariadosRama()
 </script> 
 {% endblock container %}
 
