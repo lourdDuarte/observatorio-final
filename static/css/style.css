@@ -304,14 +304,19 @@
 .contenedor-selects {
     display: flex;
     flex-direction: row;
+    width: 100%;
    
     /* Ajustar otras propiedades como `justify-content` si es necesario */
   }
-.contenedor-selects select{
+.div-table select{
     width: 15em;
     height: 2em;
     margin-top: 2em;
     
    
 
+}
+
+.contenedor-selects form{
+    margin-bottom: 5em;
 }

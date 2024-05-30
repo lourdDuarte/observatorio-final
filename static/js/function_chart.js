@@ -76,12 +76,12 @@ function draw_line_chart(interanual,intermensual,mes, text, id)
 }
 
 
-function draw_basic_line_chart(data,mes, id){
+function draw_basic_line_chart(data,mes,text, id){
   
   var options = {
     series: [{
-      name: "Desktops",
-      data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+      name: "data",
+      data: data
   }],
     chart: {
     height: 350,
@@ -97,8 +97,8 @@ function draw_basic_line_chart(data,mes, id){
     curve: 'straight'
   },
   title: {
-    text: 'Product Trends by Month',
-    align: 'left'
+    text: text,
+    align: 'center'
   },
   grid: {
     row: {
@@ -107,7 +107,7 @@ function draw_basic_line_chart(data,mes, id){
     },
   },
   xaxis: {
-    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+    categories: mes,
   }
   };
 
@@ -116,12 +116,12 @@ function draw_basic_line_chart(data,mes, id){
 }
 
 
-function draw_column_chart(data, meses, id){
+function draw_column_chart(data, meses, text, id){
  
   var options = {
     series: [{
     
-    data: [23, 31, 40, 101, 40, 36, 32, 23, 14, 48, 45, 42]
+    data: data
   }],
     chart: {
     height: 350,
@@ -131,7 +131,7 @@ function draw_column_chart(data, meses, id){
   
   
   xaxis: {
-    categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    categories: meses,
     position: 'bottom',
    
     
@@ -139,8 +139,7 @@ function draw_column_chart(data, meses, id){
   },
  
   title: {
-    text: 'Monthly Inflation in Argentina, 2002',
-   
+    text: text,
     offsetY: 5,
     align: 'center',
     

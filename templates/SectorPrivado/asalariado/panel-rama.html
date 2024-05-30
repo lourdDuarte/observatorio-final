@@ -63,32 +63,40 @@
                 </table>
             </div>
             <h6 class="mb-0" style="margin-top:2em;">Asalariados sector privado rama de acrividad variable intermensual / cantidad - Graficos </h6>
-            <div class="contenedor-selects">
-                <form method= "POST" action=" {% url 'rama-panel' %}">
-                    {% csrf_token %}
-                    <select class="select1" name="año">
-                        <option selected>Año</option>
-                        {% for año in años  %}
-                            <option value="{{año.id}}">{{año.año}}</option>
-                        {% endfor %}
+           
+               
+            <form  method= "POST" action=" {% url 'rama-panel' %}" >
+                {% csrf_token %}
+                <select class="select1" name="año">
+                    <option selected>Año</option>
+                    {% for año in años  %}
+                        <option value="{{año.id}}">{{año.año}}</option>
+                    {% endfor %}
+                
+                </select>
+                <select class="select1" name="tipo_rama">
+                    <option selected>Rama de actividad</option>
+                    {% for rama in ramas  %}
+                        <option value="{{rama.id}}">{{rama.nombre_rama}}</option>
+                    {% endfor %}
+                
+                </select>
+                <button type="submit" id="btn" class="btn btn-primary ms-2">Filtrar</button>
+                
+                
+            </form>
+            
+                <div class="contenedor-selects">
+                
+               
+                
+                    <div style= "width: 950px; margin-left: 5em; margin-top:2em  " id="chartCantidad"></div>
+                    <div style= "width: 950px; margin-left:3em; margin-top:2em  " id="chartIntertrimestral"></div>
+    
+                </div>
                     
-                    </select>
-                    <select class="select1" name="tipo_rama">
-                        <option selected>Rama de actividad</option>
-                        {% for rama in ramas  %}
-                            <option value="{{rama.id}}">{{rama.nombre_rama}}</option>
-                        {% endfor %}
-                    
-                    </select>
-                    <button type="submit" id="btn" class="btn btn-primary ms-2">Filtrar</button>
-                    <div class="container ">
-                        <div style= "width: 750px; margin-left:-7em; " id="chartCantidad"></div>
-                        <div style= "width: 750px; margin-left: 2em; " id="chartIntertrimestral"></div>
-
-                    </div>
-                    
-                </form>
-            </div>
+            
+           
 </div>
 <script>
   
