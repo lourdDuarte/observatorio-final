@@ -4,14 +4,24 @@ from Año.models import Año
 from Mes.models import Mes
 
 # Create your views here.
+
+def asalariados_listado(request):
+    listado = AsalariadosRegistrados.objects.all()
+    context = {
+        
+        'listado':listado,
+        
+    }
+    return render(request, 'SectorPrivado/asalariado/listado.html', context)
+
 def privado_panel(request):
     listado = AsalariadosRegistrados.objects.all()
-   
+    data_actual = AsalariadosRegistrados.objects.filter(año=6).all()
+    
     años = Año.objects.all()
     context = {
         'años':años, 
-        'listado':listado,
-       
+        'data_actual':data_actual       
     }
 
 

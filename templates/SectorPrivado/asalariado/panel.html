@@ -9,66 +9,20 @@
 
 {% block container %}
 
-<div class="container"></div>
-          
-  
-
-
-<div class="container ">
-    
-  
-</div>
-
-          
-  
-
-<div class="div-table">
-    <h6 class="mb-0"  >Asalariados sector privado</h6>
-     
-            
-
-            <div class="table-responsive-sm" style="margin-top:2em;">
-
-               <table id="datatablesSimple" style="margin-bottom:2em;">
-                  <thead>
-                     <tr>
-                        <th>Año</th>
-                        <th>Mes</th>
-                        <th>Tipo valor</th>
-                        <th>Estacionalidad</th>
-                        <th>Cantidad registrados</th>
-                        <th>Diferencia intermensual</th>
-                        <th>Variable intermensual</th>
-                        <th>Diferencia interanual</th>
-                        <th>Variable interanual</th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     
-                     {% for data in listado %}
-                     <tr>
-                        <td>{{data.año}}</td>
-                        <td>{{data.mes}}</td>
-                        <td>{{data.tipo_valor}}</td>
-                        <td>{{data.tipo_estacionalidad}}</td>
-                        <td>{{data.cantidad_registrado}}</td>
-                        <td>{{data.dif_intermensual}}</td>
-                        <td>{{data.var_intermensual}}</td>
-                        <td>{{data.dif_interanual}}</td>
-                        <td>{{data.var_interanual}}</td>
-                     </tr>
-                     {% endfor %}
-                     
-                       
-                    
-                     
-                    
-                    
-                  </tbody>
-                </table>
+<div class="content">   
+    <div class="div-content">
+        <div class="content-graficos">
+            <h6 class="mb-0"  >Asalariados sector privado</h6>
+            <div class="content-description">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis, nihil. Ut impedit cum alias tempora voluptas dolorum laudantium officia cupiditate nesciunt magni porro quia exercitationem, ab quae neque modi, distinctio odit eveniet! Pariatur dicta commodi ex odio nemo quidem similique impedit, deserunt ea! Numquam ut a quae atque tempora modi consequatur in ad aspernatur quos! Voluptatem quasi omnis expedita adipisci optio reiciendis voluptate possimus ipsum, saepe libero, ea eos natus. 
+                Velit, sit! Iste labore asperiores, reprehenderit magni pariatur alias officia!
             </div>
-            <h6 class="mb-0" style="margin-top:2em;">Asalariados sector privado variable y diferencia intermensual / interanual - Graficos </h6>
-            <div class="contenedor-selects">
+            <div class="content-chart-actual">
+                <div style= "width: 630px;" id="chartVariableActual"></div>
+                <div style= "width: 630px; " id="chartDiferenciaActual"></div>
+            </div>
+            <div class="content-filter">
+                <h6 class="mb-0" style="margin-top:2em;">Asalariados sector privado variable y diferencia intermensual / interanual - Historico </h6>
                 <form method= "POST" action=" {% url 'asalariado-panel' %}">
                     {% csrf_token %}
                     <select class="select1" name="año">
@@ -76,49 +30,225 @@
                         {% for año in años  %}
                             <option value="{{año.id}}">{{año.año}}</option>
                         {% endfor %}
-                    
+                            
                     </select>
-                    <button type="submit" id="btn" class="btn btn-primary ms-2">Filtrar</button>
+                    <button type="submit" id="btn" class="btn-filtrar">Filtrar</button>
                     <div class="container ">
-                        <div style= "width: 750px; margin: 35px auto; margin-left:-7em; " id="chartVariable"></div>
-                        <div style= "width: 750px; margin: 35px auto; margin-left: 2em; " id="chartDiferencia"></div>
-
+                        <div style= "width: 630px;" id="chartVariable"></div>
+                        <div style= "width: 630px; margin-left: 2em; " id="chartDiferencia"></div>
+    
                     </div>
-                    
+                            
                 </form>
+
             </div>
-</div>
-<script>
-  
+            
+           
+        
+        </div>
+        {% comment %}         
+        <div class="table-responsive-sm" style="margin-top:2em;">
 
-    function obtenerDatosFiltroAsalariado(){
-      let var_interanual_filtro = [];
-      let var_intermensual_filtro = [];
+            <table id="datatablesSimple" style="margin-bottom:2em;">
+            <thead>
+                <tr>
+                    <th>Año</th>
+                    <th>Mes</th>
+                    <th>Tipo valor</th>
+                    <th>Estacionalidad</th>
+                    <th>Cantidad registrados</th>
+                    <th>Diferencia intermensual</th>
+                    <th>Variable intermensual</th>
+                    <th>Diferencia interanual</th>
+                    <th>Variable interanual</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                {% for data in listado %}
+                <tr>
+                    <td>{{data.año}}</td>
+                    <td>{{data.mes}}</td>
+                    <td>{{data.tipo_valor}}</td>
+                    <td>{{data.tipo_estacionalidad}}</td>
+                    <td>{{data.cantidad_registrado}}</td>
+                    <td>{{data.dif_intermensual}}</td>
+                    <td>{{data.var_intermensual}}</td>
+                    <td>{{data.dif_interanual}}</td>
+                    <td>{{data.var_interanual}}</td>
+                </tr>
+                {% endfor %}
+                
+                
+                
+                
+                
+                
+            </tbody>
+            </table>
+        </div> {% endcomment %}
+        
+        
+    </div>
+    <div class="div-card">
+        <a href="{% url 'asalariado-listado' %}">
+            <button class="btn-data-historico"><i class="fa fa-eye" aria-hidden="true"></i> 
+                Listado de datos historico
+           </button>
+        </a>
+        <a href="{% url 'rama-panel' %}">
+            <button style="margin-top:1em" class="btn-data-historico"><i class="fa fa-eye" aria-hidden="true"></i> 
+                Asalariados sector privado por rama de actividad
+           </button>
+        </a>
+            
+       
+        <div class="card-data">
+            <h1>Asalariados registrados - Intermensual</h1>
+            <div class="content-valor">
+                <h6>Valor actual</h6>
+                <h1>-1.6%</h1>
 
-      let dif_interanual_filtro = [];
-      let dif_intermensual_filtro = [];
-      let meses_filtro = []
+            </div>
+        </div>
+        <div class="card-data">
+            <h1>Asalariados registrados - Interanual</h1>
+            <div class="content-valor">
+                <h6>Valor actual</h6>
+                <h1>-17.2%</h1>
 
+            </div>
+        </div>
 
-      // Obtener datos
-      {% for data in data_filtro %}
+    </div>
+
           
-          var_interanual_filtro.push({{ data.var_interanual }});
-          var_intermensual_filtro.push({{ data.var_intermensual}});
-
-          dif_interanual_filtro.push({{ data.dif_interanual }});
-          dif_intermensual_filtro.push({{ data.dif_intermensual}});
-          meses_filtro.push('{{data.mes}}')
   
-      {% endfor %}
 
-      return [dif_interanual_filtro, dif_intermensual_filtro,var_interanual_filtro, var_intermensual_filtro, meses_filtro];
-      }
+    {% comment %} <div class="div-table">
+        
+        
+                
 
+                <div class="table-responsive-sm" style="margin-top:2em;">
+
+                    <table id="datatablesSimple" style="margin-bottom:2em;">
+                    <thead>
+                        <tr>
+                            <th>Año</th>
+                            <th>Mes</th>
+                            <th>Tipo valor</th>
+                            <th>Estacionalidad</th>
+                            <th>Cantidad registrados</th>
+                            <th>Diferencia intermensual</th>
+                            <th>Variable intermensual</th>
+                            <th>Diferencia interanual</th>
+                            <th>Variable interanual</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        {% for data in listado %}
+                        <tr>
+                            <td>{{data.año}}</td>
+                            <td>{{data.mes}}</td>
+                            <td>{{data.tipo_valor}}</td>
+                            <td>{{data.tipo_estacionalidad}}</td>
+                            <td>{{data.cantidad_registrado}}</td>
+                            <td>{{data.dif_intermensual}}</td>
+                            <td>{{data.var_intermensual}}</td>
+                            <td>{{data.dif_interanual}}</td>
+                            <td>{{data.var_interanual}}</td>
+                        </tr>
+                        {% endfor %}
+                        
+                        
+                        
+                        
+                        
+                        
+                    </tbody>
+                    </table>
+                </div>
+                <h6 class="mb-0" style="margin-top:2em;">Asalariados sector privado variable y diferencia intermensual / interanual - Graficos </h6>
+                <div class="contenedor-selects">
+                    <form method= "POST" action=" {% url 'asalariado-panel' %}">
+                        {% csrf_token %}
+                        <select class="select1" name="año">
+                            <option selected>Año</option>
+                            {% for año in años  %}
+                                <option value="{{año.id}}">{{año.año}}</option>
+                            {% endfor %}
+                        
+                        </select>
+                        <button type="submit" id="btn" class="btn btn-primary ms-2">Filtrar</button>
+                        <div class="container ">
+                            <div style= "width: 750px; margin: 35px auto; margin-left:-7em; " id="chartVariable"></div>
+                            <div style= "width: 750px; margin: 35px auto; margin-left: 2em; " id="chartDiferencia"></div>
+
+                        </div>
+                        
+                    </form>
+                </div>
+    </div> {% endcomment %}
+    
+</div>
+    <script>
+    
+        function obtenerDatosAsalariados(){
+            let var_interanual = [];
+            let var_intermensual = [];
+    
+            let dif_interanual = [];
+            let dif_intermensual = [];
+            let meses = []
     
     
-   
-    asalariados()
-</script> 
+            // Obtener datos
+            {% for data in data_actual %}
+                
+                var_interanual.push({{ data.var_interanual }});
+                var_intermensual.push({{ data.var_intermensual}});
+    
+                dif_interanual.push({{ data.dif_interanual }});
+                dif_intermensual.push({{ data.dif_intermensual}});
+                meses.push('{{data.mes}}')
+        
+            {% endfor %}
+    
+            return [dif_interanual, dif_intermensual,var_interanual, var_intermensual, meses];
+
+        }
+
+
+        function obtenerDatosFiltroAsalariado(){
+        let var_interanual_filtro = [];
+        let var_intermensual_filtro = [];
+
+        let dif_interanual_filtro = [];
+        let dif_intermensual_filtro = [];
+        let meses_filtro = []
+
+
+        // Obtener datos
+        {% for data in data_filtro %}
+            
+            var_interanual_filtro.push({{ data.var_interanual }});
+            var_intermensual_filtro.push({{ data.var_intermensual}});
+
+            dif_interanual_filtro.push({{ data.dif_interanual }});
+            dif_intermensual_filtro.push({{ data.dif_intermensual}});
+            meses_filtro.push('{{data.mes}}')
+    
+        {% endfor %}
+
+        return [dif_interanual_filtro, dif_intermensual_filtro,var_interanual_filtro, var_intermensual_filtro, meses_filtro];
+        }
+
+        
+        
+        
+        asalariados()
+    </script> 
 {% endblock container %}
 

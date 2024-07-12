@@ -1,0 +1,66 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block head_content %}
+
+    <title>Asalariados sector privado</title>
+
+{% endblock head_content %}
+
+{% block container %}
+
+<div class="content">
+    <h1 class="title-listado"><i class="fas fa-briefcase"></i> Lista de datos historico - Asalariados Sector Privado</h1> 
+    <div class="content-tabla">
+        <div class="table-responsive-sm" style="margin-top:2em;">
+
+            <table id="datatablesSimple" style="margin-bottom:2em;">
+            <thead>
+                <tr>
+                    <th >Año</th>
+                    <th>Mes</th>
+                    <th>Tipo valor</th>
+                    <th>Estacionalidad</th>
+                    <th>Cantidad registrados</th>
+                    <th>Diferencia intermensual</th>
+                    <th>Variable intermensual</th>
+                    <th>Diferencia interanual</th>
+                    <th>Variable interanual</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                {% for data in listado %}
+                <tr>
+                    <td>{{data.año}}</td>
+                    <td>{{data.mes}}</td>
+                    <td>{{data.tipo_valor}}</td>
+                    <td>{{data.tipo_estacionalidad}}</td>
+                    <td>{{data.cantidad_registrado}}</td>
+                    <td>{{data.dif_intermensual}}</td>
+                    <td>{{data.var_intermensual}}</td>
+                    <td>{{data.dif_interanual}}</td>
+                    <td>{{data.var_interanual}}</td>
+                </tr>
+                {% endfor %}
+                
+                
+                
+                
+                
+                
+            </tbody>
+            </table>
+        </div> 
+        
+        
+    </div>
+
+    </div>
+   
+
+  
+</div>
+
+{% endblock container %}
+

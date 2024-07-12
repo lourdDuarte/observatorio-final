@@ -26,6 +26,7 @@ urlpatterns = [
     path('ipc-listado',ipc.listado, name='ipc-listado'),
     path('ipc-panel',ipc.ipc_panel, name='ipc-panel'),
     path('asalariado-panel',privado.privado_panel, name='asalariado-panel'),
+    path('asalariado-listado',privado.asalariados_listado, name='asalariado-listado'),
     path('rama-panel',privado.rama_panel, name='rama-panel'),
 
 ]

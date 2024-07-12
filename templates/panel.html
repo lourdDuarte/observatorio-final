@@ -3,104 +3,82 @@
 {% load static %}
 {% block head_content %}
 
-    <title>Panel de consultas</title>
+  
 {% endblock head_content %}
 
 {% block container %}
-{% comment %} <div class="col-sm-12 col-xl-10" style="margin-top:3em;">
-    <div class="bg-light rounded h-100 p-4">
-        <h6 class="mb-0">Consulta personalizada</h6>
-        <br>
-        <div id="div-select">
-            <form method= "POST" action=" {% url 'panel' %}">
-              {% csrf_token %}
-              
-              <select name="tabla1">
-                <option selected>Seleccionar tablas</option>
-                
-              
-                  <option value="Remuneracion - IPC">IPC - Remuneracion - sector privado</option>
-                  <option value="AsalariadosRegistrados">IPC - Asalariados - sector privado</option>
-               
-               
-              </select>
-              
-              <select name="valor">
-                <option selected>Seleccionar valor</option>
-                
-                <option value="intermensual">Intermensual</option>
-                <option value="interanual">Interanual</option>
-                
-                
-               
-              </select>
-              <select name="año">
-                <option selected>Seleccionar año</option>
-                {% for año in años  %}
-                  <option value="{{año.id}}">{{año.año}}</option>
-                {% endfor %}
-               
-              </select>
-              
-              <button type="submit" class="btn btn-primary mt-2 ">Filtrar</button>
-            </form>
-            <div style= "width: 650px; margin: 35px auto" id="chartIpcHistorico"></div>
-        </div>
-        <div style= "width: 650px; margin: 35px auto" id="chart"></div>
-       
-            
-    </div>
-</div>
-<script>
+
    
-    meses = []
+    <div class="content">
+      <div class="content-descripcion">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+        Culpa fugiat omnis excepturi nihil, laboriosam illo porro, 
+        ipsum totam libero alias et deleniti, facilis tenetur praesentium dolore ex reiciendis doloremque reprehenderit. Repudiandae dolore pariatur, neque quas est voluptate eligendi nostrum in minima voluptas aliquid magnam velit ea vero molestias aut ipsum aspernatur quisquam? Nobis distinctio delectus quae fugiat quisquam, aliquid inventore officiis sapiente voluptatem itaque tenetur similique ex et consectetur perspiciatis laudantium quibusdam dolor rerum amet nostrum hic maxime praesentium dolorem? Voluptate aperiam dolor facere, vitae aut, sunt tempora excepturi, recusandae dolorem neque consectetur quaerat molestias nobis ipsa architecto sed nulla.
+      </div>
+      <div class="card-content">
+        <div class="card">
+          <div class="circle-icon">
+            <i class="fas fa-shopping-cart"></i>
+          </div>
+          <div class="div-acceso">
+           Evolucion ventas
+          </div>
+          <div class="div-acceso">
+           Ventas sin inflacion
+          </div>
+        </div>
+        <div class="card">
+          <div class="circle-icon">
+            <i style="left:0.9em;" class="fas fa-car"></i>
+          </div>
+          <div class="div-acceso">
+            Venta autos
+           </div>
+           <div class="div-acceso">
+            Transferencia autos usados
+           </div>
+        </div>
+        <div class="card">
+          <div class="circle-icon">
+            <i class="fas fa-motorcycle"></i>
+          </div>
+          <div class="div-acceso">
+            Venta motos
+           </div>
+           <div class="div-acceso">
+            Transferencia motos usadas
+           </div>
+        </div>
+        <div class="card">
+          <div class="circle-icon">
+            <i style="left:0.9em;" class="fas fa-briefcase"></i>
+          </div>
+          <div class="div-acceso">
+            Asalariados sector privado
+           </div>
+           <div class="div-acceso">
+            Remuneracion sector privado
+           </div>
+        </div>
+        <div class="card">
+          <div class="circle-icon">
+            <i style="left:1.1em;" class="fas fa-dollar-sign"></i>
+          </div>
+          <div class="div-acceso">
+            Base imponible
+           </div>
+           <div class="div-acceso">
+            Recaudacion
+           </div>
+        </div>
+       
 
-    
-    
-    
-    function obtenerDatosIntermensualUno(){
-      
-      intermensual = []
-      {% for data in intermensual_uno  %}
-        
-            intermensual.push({{data.intermensual}}) 
-        
-          
-        {% for mes in meses  %}
-                {
-                  {% if data.mes == mes.id %}
-                    {
-                      meses.push('{{mes.mes}}')
-                    }  
-                
-                  {% endif %}
+      </div>
+      <div class="footer">
+        <img src="/static/img/logo.png" alt="" srcset="">
+        <button class="btn-informe"><i class="fa fa-download" aria-hidden="true"></i> Descargar informes</button>
 
-                }
-     
-         {% endfor %}
-
-      {% endfor %}
-      
-      return intermensual
-    }
-
-    function obtenerDatosIntermensualDos(){
-      
-      intermensual = []
-      {% for data in intermensual_dos  %}
-        
-            intermensual.push({{data.intermensual}}) 
-        
-          
-        
-
-      {% endfor %}
-      
-      return intermensual
-    }
-
-    panel()
-    
-</script> {% endcomment %}
+      </div>
+    </div>
 
 {% endblock container %}

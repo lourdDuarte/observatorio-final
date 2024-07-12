@@ -1,5 +1,9 @@
 function asalariados(){
     let [dif_interanual_filtro, dif_intermensual_filtro,var_interanual_filtro, var_intermensual_filtro, meses_filtro] = obtenerDatosFiltroAsalariado();
+    let [dif_interanual, dif_intermensual,var_interanual, var_intermensual, meses] = obtenerDatosAsalariados();
+
+    chartDifActual = draw_line_chart(dif_interanual, dif_intermensual, meses,'Datos - Diferencia','chartDiferenciaActual')
+    chartVarActual= draw_line_chart(var_interanual, var_intermensual, meses,'Datos - Variable','chartVariableActual')
 
     chartDif = draw_line_chart(dif_interanual_filtro, dif_intermensual_filtro, meses_filtro,'Datos - Diferencia','chartDiferencia')
     chartVar = draw_line_chart(var_interanual_filtro, var_intermensual_filtro, meses_filtro,'Datos - Variable','chartVariable')
