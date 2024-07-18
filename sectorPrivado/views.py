@@ -42,14 +42,14 @@ def privado_panel(request):
 
 
 def rama_panel(request):
-    listado = AsalariadosRama.objects.all()
+    
     ramas = RamaActividad.objects.all()
    
     años = Año.objects.all()
     context = {
         'años':años, 
         'ramas':ramas,
-        'listado':listado,
+        
        
     }
 
@@ -58,10 +58,10 @@ def rama_panel(request):
         rama = request.POST.get('tipo_rama')
         if año and año.isdigit() and rama:
             data_filtro = AsalariadosRama.objects.filter(año=año, tipo_rama=rama).all()
-            
+            listado = AsalariadosRama.objects.filter(año=año, tipo_rama=rama).all()
             context.update({
                 'data_filtro': data_filtro,
-                
+                'listado':listado
             })
 
         else:

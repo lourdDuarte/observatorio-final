@@ -282,12 +282,19 @@ body {
     background: #d9d6d6f1;;
 }
 
-.btn-filtrar{
+.btn-filtrar, .btn-listado{
     width: 100px;
     height: 30px;
     border: 2px solid #003763;
     border-radius: 5px;
     background: #ffff;
+}
+
+.btn-listado{
+    width: 180px;
+    margin-top: 1em;
+    height: 40px;
+
 }
 
 .content .title-listado{

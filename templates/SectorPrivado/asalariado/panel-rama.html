@@ -10,104 +10,92 @@
 {% block container %}
 
 <div class="content">
-    <div class="div-content" style="width:100%">
-        <div class="content-graficos">
-            <h6 class="mb-0"  >Asalariados sector privado - Cantidad registrados por rama de actividad</h6>
-            <div class="content-description">
+    <div class="div-content" style="width:100%;">
+        
+        <h6 class="mb-0"  >Asalariados Sector Privado - por rama de actividad</h6>
+        <div class="content-description">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis, nihil. Ut impedit cum alias tempora voluptas dolorum laudantium officia cupiditate nesciunt magni porro quia exercitationem, ab quae neque modi, distinctio odit eveniet! Pariatur dicta commodi ex odio nemo quidem similique impedit, deserunt ea! Numquam ut a quae atque tempora modi consequatur in ad aspernatur quos! Voluptatem quasi omnis expedita adipisci optio reiciendis voluptate possimus ipsum, saepe libero, ea eos natus. 
                 Velit, sit! Iste labore asperiores, reprehenderit magni pariatur alias officia!
-            </div>
         </div>
-    </div>
+            <div class="content-filter" style="margin-top:4em;">
+                <form  method= "POST" action=" {% url 'rama-panel' %}" >
+                    {% csrf_token %}
+                    <select class="select1" name="año">
+                        <option selected>Año</option>
+                        {% for año in años  %}
+                            <option value="{{año.id}}">{{año.año}}</option>
+                        {% endfor %}
+                    
+                    </select>
+                    <select class="select1" name="tipo_rama">
+                        <option selected>Rama de actividad</option>
+                        {% for rama in ramas  %}
+                            <option value="{{rama.id}}">{{rama.nombre_rama}}</option>
+                        {% endfor %}
+                    
+                    </select>
+                    <button type="submit" id="btn" class="btn-filtrar">Filtrar</button>
+                    <div class="container ">
+                        <div  style= "width: 820px;" id="chartCantidad"></div>
+                        <div  style= "width: 820px; margin-left:8em;" id="chartIntertrimestral"></div>
+    
+                    </div>
+                    
+                </form>
 
+            </div>
+           
+            
+           
+        
+        
+   
+    
+        <h1 class="title-listado" style="font-size:18px;" ><i style="font-size:18px;" class="fas fa-briefcase"></i> Listado de datos</h1> 
+        <div class="content-tabla" >
+            <div class="table-responsive-sm" >
+                <table id="datatablesSimple" >
+                    <thead>
+                       <tr>
+                          <th>Año</th>
+                          <th>Mes</th>
+                          <th>Tipo valor</th>
+                          <th>Rama</th>
+                          <th>Cantidad registrados</th>
+                          <th>Variable intertrimestral</th>
+  
+                       </tr>
+                    </thead>
+                    <tbody>
+                       
+                       {% for data in listado %}
+                       <tr>
+                          <td>{{data.año}}</td>
+                          <td>{{data.mes}}</td>
+                          <td>{{data.tipo_valor}}</td>
+                          <td>{{data.tipo_rama}}</td>
+                          <td>{{data.cantidad_registrado}}</td>
+                          <td>{{data.var_intertrimestral}}</td>
+  
+                       {% endfor %}
+                       
+                         
+                      
+                       
+                      
+                      
+                    </tbody>
+                  </table>
+            </div>
+        </div> 
+    </div>
+    
 
 
 
 </div>
           
-  
 
-
-
-          
-  
-
-{% comment %} <div class="div-table">
-    <h6 class="mb-0"  >Asalariados sector privado - Ramas de actividad</h6>
-     
-            
-
-            <div class="table-responsive-sm" style="margin-top:2em;">
-
-               <table id="datatablesSimple" style="margin-bottom:2em;">
-                  <thead>
-                     <tr>
-                        <th>Año</th>
-                        <th>Mes</th>
-                        <th>Tipo valor</th>
-                        <th>Rama</th>
-                        <th>Cantidad registrados</th>
-                        <th>Variable intertrimestral</th>
-
-                     </tr>
-                  </thead>
-                  <tbody>
-                     
-                     {% for data in listado %}
-                     <tr>
-                        <td>{{data.año}}</td>
-                        <td>{{data.mes}}</td>
-                        <td>{{data.tipo_valor}}</td>
-                        <td>{{data.tipo_rama}}</td>
-                        <td>{{data.cantidad_registrado}}</td>
-                        <td>{{data.var_intertrimestral}}</td>
-
-                     {% endfor %}
-                     
-                       
-                    
-                     
-                    
-                    
-                  </tbody>
-                </table>
-            </div>
-            <h6 class="mb-0" style="margin-top:2em;">Asalariados sector privado rama de acrividad variable intermensual / cantidad - Graficos </h6>
-           
-               
-            <form  method= "POST" action=" {% url 'rama-panel' %}" >
-                {% csrf_token %}
-                <select class="select1" name="año">
-                    <option selected>Año</option>
-                    {% for año in años  %}
-                        <option value="{{año.id}}">{{año.año}}</option>
-                    {% endfor %}
-                
-                </select>
-                <select class="select1" name="tipo_rama">
-                    <option selected>Rama de actividad</option>
-                    {% for rama in ramas  %}
-                        <option value="{{rama.id}}">{{rama.nombre_rama}}</option>
-                    {% endfor %}
-                
-                </select>
-                <button type="submit" id="btn" class="btn btn-primary ms-2">Filtrar</button>
-                
-                
-            </form>
-            
-                <div class="contenedor-selects">
-                
-               
-                
-                    <div style= "width: 950px; margin-left: 5em; margin-top:2em  " id="chartCantidad"></div>
-                    <div style= "width: 950px; margin-left:3em; margin-top:2em  " id="chartIntertrimestral"></div>
-    
-                </div>
-                    
-            
-           
-</div> {% endcomment %}
 <script>
   
 
